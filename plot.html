@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>Amazon Fashion Review</title>
 
+    <!-- Load stylesheet for slider(Add more css here if needed)-->
+    <link rel="stylesheet" type="text/css" href="slider.css">
     <!--    Load fontawesome-->
     <script src="https://kit.fontawesome.com/7fec6e579b.js" crossorigin="anonymous"></script>
 
@@ -28,93 +30,114 @@
 
 <!--    Load the plotting script-->
     <script src="initPlot.js"></script>
+</head>
+<body>
+    <div class="main-div">
+        <div class="container">
+            <div id="mainPlot">
+            </div>
+            <div id="myModal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <span class="close">&times;</span>
+                        <h4></h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-3">
 
-    <div class="container">
-        <div id="mainPlot">
-        </div>
-        <div id="myModal" class="modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <span class="close">&times;</span>
-                    <h4></h4>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-3">
-
-                        </div>
-                        <div class="col-md-9">
-                            <p>Some text in the Modal Body</p>
-                            <p>Some other text...</p>
+                            </div>
+                            <div class="col-md-9">
+                                <p>Some text in the Modal Body</p>
+                                <p>Some other text...</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <h4>Modal Footer</h4>
+                    <div class="modal-footer">
+                        <h4>Modal Footer</h4>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <br/>
-    <div id="filtersMenu">
-        <div id="sentimentFilters" style="float:left">
-            <p>Sentiment Based Filtering</p>
-            <a class="btn btn-default filterBtn" data-edit="sentiment 1 2">
-                <i class="far fa-tired fa-2x"></i>
-            </a>
+        <br/>
+        <div id="filtersMenu">
+            <div id="sentimentFilters" style="float:left">
+                <p style="color:white">Sentiment Based Filtering</p>
+                <a class="btn btn-default filterBtn" data-edit="sentiment 1 2">
+                    <i class="far fa-tired fa-2x"></i>
+                </a>
 
-            <a class="btn btn-default filterBtn" data-edit="sentiment 2 3">
-                <i class="far fa-frown fa-2x"></i>
-            </a>
+                <a class="btn btn-default filterBtn" data-edit="sentiment 2 3">
+                    <i class="far fa-frown fa-2x"></i>
+                </a>
 
-            <a class="btn btn-default filterBtn" data-edit="sentiment 3">
-                <i class="fa fa-meh-o fa-2x" aria-hidden="true"></i>
-            </a>
+                <a class="btn btn-default filterBtn" data-edit="sentiment 3">
+                    <i class="fa fa-meh-o fa-2x" aria-hidden="true"></i>
+                </a>
 
-            <a class="btn btn-default filterBtn" data-edit="sentiment 3.01 4">
-                <i class="far fa-grin-alt fa-2x"></i>
-            </a>
+                <a class="btn btn-default filterBtn" data-edit="sentiment 3.01 4">
+                    <i class="far fa-grin-alt fa-2x"></i>
+                </a>
 
-            <a class="btn btn-default filterBtn" data-edit="sentiment 4 5">
-                <i class="far fa-grin-stars fa-2x"></i>
-            </a>
+                <a class="btn btn-default filterBtn" data-edit="sentiment 4 5">
+                    <i class="far fa-grin-stars fa-2x"></i>
+                </a>
 
-            <a class="btn btn-default filterBtn" data-edit="sentiment removeFilter">
-                <span>No Filter</span>
-            </a>
+            </div>
 
+            <!--
+            <div id="ratingFilters" style="float:left">
+                <p>Rating Based Filtering</p>
+                <select>
+                    <option>
+                        <a class="btn btn-default filterBtn" data-edit="sentiment 1 2">
+                            <span>1 to 2</span>
+                        </a>
+                    </option>
+
+                    <option>
+                        <a class="btn btn-default filterBtn" data-edit="sentiment 1 2">
+                            <span>2 to 3</span>
+                        </a>
+                    </option>
+
+                    <option>
+                        <a class="btn btn-default filterBtn" data-edit="sentiment 1 2">
+                            <span>3 to 4</span>
+                        </a>
+                    </option>
+
+                    <option>
+                        <a class="btn btn-default filterBtn" data-edit="sentiment 1 2">
+                            <span>4 to 5</span>
+                        </a>
+                    </option>
+                </select>
+
+                <a class="btn btn-default filterBtn" data-edit="sentiment removeFilter">
+                    <span>No Filter</span>
+                </a>
+
+            </div>
+        -->
+
+            <div class="slidecontainer" id = "ratingFilters" style="float:left;width:250px" >
+                <p style="color:white">Rating Based Filtering</p>
+                <input type="range" min="1" max="5" value="5" step=0.5 class="ratings slider" id="myRange">
+                <p style="color:white" id='sliderVal'>Max Rating: 5</p>
+
+            </div>
+
+            <div class = "btnDiv" id = "noFilterBtn" style='float:left'>
+                <br><br>
+                <a class="btn btn-default filterBtn" data-edit="sentiment removeFilter">
+                    <span>No Filter</span>
+                </a>
+            </div>
         </div>
-        <div id="ratingFilters" style="float:left">
-            <p>Rating Based Filtering</p>
-            <select>
-                <option>
-                    <a class="btn btn-default filterBtn" data-edit="sentiment 1 2">
-                        <span>1 to 2</span>
-                    </a>
-                </option>
-
-                <option>
-                    <a class="btn btn-default filterBtn" data-edit="sentiment 1 2">
-                        <span>2 to 3</span>
-                    </a>
-                </option>
-
-                <option>
-                    <a class="btn btn-default filterBtn" data-edit="sentiment 1 2">
-                        <span>3 to 4</span>
-                    </a>
-                </option>
-
-                <option>
-                    <a class="btn btn-default filterBtn" data-edit="sentiment 1 2">
-                        <span>4 to 5</span>
-                    </a>
-                </option>
-            </select>
-        </div>
     </div>
-</head>
-<body>
+</body>
+
 <script>
 
     var modal = document.getElementById("myModal");
@@ -131,6 +154,11 @@
     span.onclick = function() {
         modal.style.display = "none";
     }
+
+    var slider = document.getElementById("myRange");
+    slider.addEventListener('change',(event)=>{
+        handleFilter(event);
+    });
 </script>
-</body>
+
 </html>

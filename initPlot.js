@@ -3,6 +3,8 @@ window.onload = function(){
     initPlot();
 };
 
+
+
 var chart;
 
 function initPlot(){
@@ -21,6 +23,7 @@ function initPlot(){
             chart: {
                 type: 'scatter',
                 zoomType: 'xy',
+                backgroundColor: 'transparent',
                 events: {
                     click: unselectByClick,
                 }
@@ -70,7 +73,7 @@ function initPlot(){
                                 lineColor: 'rgb(100,100,100)'
                             },
                             select:{
-                                fillColor: 'rgb(83, 83, 225)',
+                                fillColor: 'rgb(255, 26, 117,0.7)',
                                 lineWidth: 1,
                                 lineColor: '#ffffff',
                                 radius: 10
@@ -108,7 +111,10 @@ function initPlot(){
                                 var modaljq = $('#myModal');
                                 var span = document.getElementsByClassName("close")[0];
                                 var spn3 = modaljq.find('.col-md-3');
-                                spn3.empty().append('<img src="'+ e.target.options.image[0] +'" height="64px" width="64px">');
+                                if(e.target.options.new_image == "null")
+                                    spn3.empty().append('<img src="'+ e.target.options.image[0] +'" height="64px" width="64px">');
+                                else
+                                    spn3.empty().append('<img src="'+ e.target.options.new_image +'" height="250px" width="150px">');
                                 modaljq.find('.modal-header h4').text(e.target.options.title);
 
                             }
@@ -118,7 +124,7 @@ function initPlot(){
             },
             series: [{
                 data: processChartData(null),
-                color: 'rgba(83, 83, 223, 0.7)',
+                color: 'rgb(255, 26, 117,0.7)',
                 name: 'Amazon Fashion'
             }]
         })
@@ -134,11 +140,15 @@ function handleClick(){
 
 function handleFilter(event){
     event.target.selected = true;
-    var filterObj = {'sentiment':{}};
+    var filterObj = {'sentiment':{},'rating':{}};
     var filterString = "";
     if(event.target.getAttribute("class")!=null){
         if(event.target.getAttribute("class").indexOf("btn") == -1){
-            filterString = event.target.parentElement.dataset.edit;
+            if(event.target.getAttribute("class").indexOf("ratings") == 0){
+                filterString = event.target.getAttribute("class");
+            }else{
+                filterString = event.target.parentElement.dataset.edit;
+            }
         }else{
             filterString = event.target.dataset.edit;
         }
@@ -154,17 +164,24 @@ function handleFilter(event){
             filterObj["sentiment"]["data"] = filterStringTokens.slice(1, filterStringTokens.length);
         }
     }
-
+    else if(filterStringTokens[0] == 'ratings'){
+        filterObj["rating"]["data"] = event.target.value;
+        var sliderVal = document.getElementById("sliderVal");
+        sliderVal.innerHTML="Max Rating: "+event.target.value;
+    }
+    
     chartData = processChartData(filterObj);
     setTimeout(update, 1000, chart.update({
         series: [{
             data: chartData,
-            color: 'rgba(83, 83, 223, 0.7)',
+            color: 'rgb(255, 26, 117,0.7)',
             name: 'Amazon Fashion'
         }]
     }));
 
 }
+
+
 
 function update(){
 

@@ -66,6 +66,7 @@ function processChartData(filter) {
             chartData.push(temp_object);
         });
         initialChartData = Object.assign([], chartData);
+        
 
     }else{
         // iterate through the initialChartData and add to the filterData if the dataElement is passed through all filters
@@ -73,11 +74,21 @@ function processChartData(filter) {
         initialChartData.forEach(function(dataElement){
             var flag = true;
             for(var filterProp in filter){
-                if(filterProp == 'sentiment' ){
+                if(filterProp == 'sentiment' && filter[filterProp]['data']){
                     if(filter[filterProp]['data'].length!=0){
                         let low = filter[filterProp]['data'][0];
                         let high = filter[filterProp]['data'][1];
                         if(dataElement['x'] < parseFloat(low) || dataElement['x'] >= parseFloat(high)){
+                            flag = false;
+                            break;
+                        }
+                    }
+                }
+                
+                if(filterProp == 'rating'){
+                    if(filter[filterProp]['data']){
+                        let rating = filter[filterProp]['data'];
+                        if(dataElement['y'] > parseFloat(rating)){
                             flag = false;
                             break;
                         }

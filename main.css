@@ -75,6 +75,7 @@
 div#filtersMenu{
     padding: 10px;
     margin: 10px;
+    display: inline-block
 }
 div#sentimentFilters{
     padding: 5px;
@@ -88,4 +89,9 @@ div#ratingFilters{
 .btn:hover {
     background: linear-gradient(#152B40, #152B40);
     color: white
+}
+.main-div{
+    background-color: rgba(0,0,0,0.7);
+    background-image: url("fashion2.png");
+
 }
