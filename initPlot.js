@@ -6,6 +6,7 @@ window.onload = function(){
 
 
 var chart;
+var filterObj = {'sentiment':{},'rating':{}};
 
 function initPlot(){
     chart = new Highcharts.chart({
@@ -140,7 +141,6 @@ function handleClick(){
 
 function handleFilter(event){
     event.target.selected = true;
-    var filterObj = {'sentiment':{},'rating':{}};
     var filterString = "";
     if(event.target.getAttribute("class")!=null){
         if(event.target.getAttribute("class").indexOf("btn") == -1){
