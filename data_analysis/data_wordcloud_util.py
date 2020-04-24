@@ -16,7 +16,7 @@ def process_wordcloud_data():
         final_review_sentence = ''
         for review in reviews:
             if 'reviewText' in review:
-                word_tokens = word_tokenize(review['reviewText'])
+                word_tokens = word_tokenize(review['reviewText'].lower())
                 for word_token in word_tokens:
                     if word_token not in stop_words and word_token.isalpha():
                         final_review_sentence += (word_token + ' ')

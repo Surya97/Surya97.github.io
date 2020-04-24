@@ -199,7 +199,7 @@ function initPlot(){
                                  * creating a new, scaled data array
                                  */
                                 var scaledData = data.map(word =>
-                                    ({ name: word.name, weight: word.weight, color: `rgb(105,105,105,${scale(word.weight)})` })
+                                    ({ name: word.name, weight: word.weight, color: `rgb(0,0,0,${scale(word.weight)})` })
                                 );
 
                                 Highcharts.chart('worcloud-container', {
@@ -216,9 +216,6 @@ function initPlot(){
                                         },
                                         name: 'Occurrences'
                                     }],
-                                    exporting: {
-                                        enabled: false
-                                    },
                                     chart:{
                                         events: {
                                             click: null,
@@ -235,9 +232,6 @@ function initPlot(){
                         }
                     }
                 }
-            },
-            exporting: {
-                enabled: false
             },
             series: [{
                 data: processChartData(null),

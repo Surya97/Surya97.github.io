@@ -143,7 +143,6 @@
     // $("#ratingSlider").slider({
     //     tooltip: 'always'
     // });
-    debugger;
     var slider = new Slider("#ratingSlider", {
         tooltip: 'always',
         tooltip_position: 'bottom'
@@ -152,7 +151,6 @@
     //     handleFilter(event);
     // });
     slider.on("slideStop", function(value){
-        debugger;
         let ratingChangeEvent = {};
         ratingChangeEvent['target'] = "ratingSlider";
         ratingChangeEvent['data'] = value;
