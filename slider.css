@@ -19,3 +19,17 @@
   background: black;
   cursor: pointer;
 }
+
+.removeFilterBtn{
+  background-color: white;
+  color: black;
+  border: 2px solid red;
+  transition-duration: 0.4s;
+  font-size: 18px;
+
+}
+
+.removeFilterBtn:hover{
+  background-color: red; /* Green */
+  color: white;
+}

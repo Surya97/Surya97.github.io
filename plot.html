@@ -5,24 +5,35 @@
     <title>Amazon Fashion Review</title>
 
     <!-- Load stylesheet for slider(Add more css here if needed)-->
-    <link rel="stylesheet" type="text/css" href="slider.css">
+<!--    <link rel="stylesheet" type="text/css" href="slider.css">-->
+
     <!--    Load fontawesome-->
     <script src="https://kit.fontawesome.com/7fec6e579b.js" crossorigin="anonymous"></script>
+
 
 <!--    Load D3 scripts for data loading-->
     <script src="https://d3js.org/d3.v5.min.js"></script>
 
 <!--    Load Highchart scripts-->
+
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+<!--    <script src="https://code.highcharts.com/7.1/highcharts.js"></script>-->
+    <script src="https://code.highcharts.com/7.1/modules/wordcloud.js"></script>
 
-<!--    Load jquery-->
+    <!--    Load jquery-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+    <!--    Load Bootstrap slider-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.2/bootstrap-slider.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.2/css/bootstrap-slider.css">
+
 
     <link rel="stylesheet" type="text/css" href="main.css">
 <!--    Load the data handling script-->
@@ -32,113 +43,85 @@
     <script src="initPlot.js"></script>
 </head>
 <body>
+    <header class="w3-container w3-center w3-padding-48 w3-white">
+        <h1 class="w3-xxxlarge"><b>AMAZON FASHION REVIEWS</b></h1>
+        <h6>Welcome to the Amazon fashion <span class="w3-tag">Sentiment based reviews</span></h6>
+    </header>
     <div class="main-div">
+
         <div class="container">
+
             <div id="mainPlot">
             </div>
             <div id="myModal" class="modal">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <span class="close">&times;</span>
-                        <h4></h4>
-                    </div>
+
+
+
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-3">
 
                             </div>
                             <div class="col-md-9">
-                                <p>Some text in the Modal Body</p>
-                                <p>Some other text...</p>
+                                <div class="card">
+
+                                    <h4></h4>
+                                    <p class="price"></p>
+                                    <p id="brand"></p>
+                                    <p><button>Link to buy</button></p>
+                                </div>
                             </div>
                         </div>
+                        </br>
+                        <div id="worcloud-container">
+
+                        </div>
                     </div>
-                    <div class="modal-footer">
-                        <h4>Modal Footer</h4>
-                    </div>
-                </div>
+
+
             </div>
         </div>
         <br/>
         <div id="filtersMenu">
             <div id="sentimentFilters" style="float:left">
                 <p style="color:white">Sentiment Based Filtering</p>
-                <a class="btn btn-default filterBtn" data-edit="sentiment 1 2">
-                    <i class="far fa-tired fa-2x"></i>
-                </a>
 
-                <a class="btn btn-default filterBtn" data-edit="sentiment 2 3">
+                <a class="btn btn-default filterBtn" data-edit="sentiment 1 2">
                     <i class="far fa-frown fa-2x"></i>
                 </a>
 
-                <a class="btn btn-default filterBtn" data-edit="sentiment 3">
+                <a class="btn btn-default filterBtn" data-edit="sentiment 2 3">
                     <i class="fa fa-meh-o fa-2x" aria-hidden="true"></i>
                 </a>
 
-                <a class="btn btn-default filterBtn" data-edit="sentiment 3.01 4">
+                <a class="btn btn-default filterBtn" data-edit="sentiment 3 4">
                     <i class="far fa-grin-alt fa-2x"></i>
                 </a>
 
                 <a class="btn btn-default filterBtn" data-edit="sentiment 4 5">
                     <i class="far fa-grin-stars fa-2x"></i>
                 </a>
-
-            </div>
-
-            <!--
-            <div id="ratingFilters" style="float:left">
-                <p>Rating Based Filtering</p>
-                <select>
-                    <option>
-                        <a class="btn btn-default filterBtn" data-edit="sentiment 1 2">
-                            <span>1 to 2</span>
-                        </a>
-                    </option>
-
-                    <option>
-                        <a class="btn btn-default filterBtn" data-edit="sentiment 1 2">
-                            <span>2 to 3</span>
-                        </a>
-                    </option>
-
-                    <option>
-                        <a class="btn btn-default filterBtn" data-edit="sentiment 1 2">
-                            <span>3 to 4</span>
-                        </a>
-                    </option>
-
-                    <option>
-                        <a class="btn btn-default filterBtn" data-edit="sentiment 1 2">
-                            <span>4 to 5</span>
-                        </a>
-                    </option>
-                </select>
-
                 <a class="btn btn-default filterBtn" data-edit="sentiment removeFilter">
-                    <span>No Filter</span>
+                    <span>all</span>
                 </a>
 
             </div>
-        -->
 
-            <div class="slidecontainer" id = "ratingFilters" style="float:left;width:250px" >
+            <div class="slidecontainer" id="ratingFilters" style="float:left;padding-left: 50px" >
                 <p style="color:white">Rating Based Filtering</p>
-                <input type="range" min="1" max="5" value="5" step=0.5 class="ratings slider" id="myRange">
-                <p style="color:white" id='sliderVal'>Max Rating: 5</p>
-
-            </div>
-
-            <div class = "btnDiv" id = "noFilterBtn" style='float:left'>
-                <br><br>
-                <a class="btn btn-default filterBtn" data-edit="sentiment removeFilter">
-                    <span>No Filter</span>
+                <input id="ratingSlider" data-slider-id='ratingSlider' type="text" data-slider-min="1" data-slider-max="5" data-slider-step="0.5" data-slider-value="5"/>
+                <a class="btn btn-default filterBtn" data-edit="ratings removeFilter" style="margin-left:10px">
+                    <span>all</span>
                 </a>
             </div>
         </div>
     </div>
+    </div>
 </body>
 
 <script>
+
 
     var modal = document.getElementById("myModal");
     var span = document.getElementsByClassName("close")[0];
@@ -151,13 +134,28 @@
             modal.style.display = "none";
         }
     }
-    span.onclick = function() {
-        modal.style.display = "none";
-    }
+    // span.onclick = function() {
+    //     modal.style.display = "none";
+    // }
 
-    var slider = document.getElementById("myRange");
-    slider.addEventListener('change',(event)=>{
-        handleFilter(event);
+    // var slider = document.getElementById("ratingSlider");
+    // $("#ratingSlider").slider({
+    //     tooltip: 'always'
+    // });
+    debugger;
+    var slider = new Slider("#ratingSlider", {
+        tooltip: 'always',
+        tooltip_position: 'bottom'
+    });
+    // slider.addEventListener('change',(event)=>{
+    //     handleFilter(event);
+    // });
+    slider.on("slideStop", function(value){
+        debugger;
+        let ratingChangeEvent = {};
+        ratingChangeEvent['target'] = "ratingSlider";
+        ratingChangeEvent['data'] = value;
+        handleFilter(ratingChangeEvent);
     });
 </script>
 
