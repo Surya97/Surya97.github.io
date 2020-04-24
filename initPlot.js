@@ -17,6 +17,9 @@ function initPlot(){
             renderTo: 'mainPlot',
             type: 'scatter',
         },
+        exporting: {
+            enabled: false
+        },
         title:{
             text:null
         }
@@ -213,6 +216,9 @@ function initPlot(){
                                         },
                                         name: 'Occurrences'
                                     }],
+                                    exporting: {
+                                        enabled: false
+                                    },
                                     chart:{
                                         events: {
                                             click: null,
@@ -229,6 +235,9 @@ function initPlot(){
                         }
                     }
                 }
+            },
+            exporting: {
+                enabled: false
             },
             series: [{
                 data: processChartData(null),
@@ -267,7 +276,6 @@ function removeFilter(event){
 }
 
 function handleFilter(event){
-    debugger;
     if(event){
         var filterString = "";
         if(event.target == "ratingSlider"){
@@ -312,7 +320,6 @@ function handleFilter(event){
             }
         }
         else if(filterStringTokens[0] == 'ratings'){
-            debugger;
             if(filterStringTokens[1] == "removeFilter"){
                 filterObj["rating"]["data"] = [];
                 slider.setValue(5);
