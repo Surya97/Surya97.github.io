@@ -128,11 +128,12 @@ function initPlot(){
                                 modaljq.find('.card .price').text(e.target.options.price);
                                 modaljq.find('.card #brand').text("Brand - " + e.target.options.brand);
 
-                                var text = "";
-                                for (var i=0; i< e.target.options.reviews.length;i++){
-                                    text = e.target.options.reviews[i]['reviewText'] + " "+ text ;
-                                }
-                                console.log(text);
+                                // var text = "";
+                                // for (var i=0; i< e.target.options.reviews.length;i++){
+                                //     text = e.target.options.reviews[i]['reviewText'] + " "+ text ;
+                                // }
+                                // console.log(text);
+                                var text = e.target.options.wordcloud;
                                 var lines = text.split(/[,\. ]+/g);
                                 var data = Highcharts.reduce(lines, function (arr, word) {
                                     var obj = Highcharts.find(arr, function (obj) {
@@ -195,7 +196,7 @@ function initPlot(){
                                  * creating a new, scaled data array
                                  */
                                 var scaledData = data.map(word =>
-                                    ({ name: word.name, weight: word.weight, color: `rgba(60,170,200,${scale(word.weight)})` })
+                                    ({ name: word.name, weight: word.weight, color: `rgb(105,105,105,${scale(word.weight)})` })
                                 );
 
                                 Highcharts.chart('worcloud-container', {
@@ -220,7 +221,7 @@ function initPlot(){
                                     title: {
                                         text: 'Wordcloud of the product review',
                                         style :{
-                                            color:'#3caac8'
+                                            color:'#000000'
                                         }
                                     }
                                 });
