@@ -1,7 +1,7 @@
 window.onload = function(){
     getMetadata();
     initPlot();
-};
+}
 $(document).ready(function() {
     $('.mdb-select').materialSelect();
 });
@@ -9,13 +9,15 @@ $(document).ready(function() {
 
 var chart;
 var currentSelectedSentiment = null
-var filterObj = {'sentiment':{},'rating':{}};
+var currentSelectedCategory = null
+var filterObj = {'sentiment':{},'rating':{},'cost':{},'category':{}};
 
 function initPlot(){
     chart = new Highcharts.chart({
         chart: {
             renderTo: 'mainPlot',
             type: 'scatter',
+            height: 450
         },
         exporting: {
             enabled: false
@@ -33,7 +35,8 @@ function initPlot(){
                 backgroundColor: 'transparent',
                 events: {
                     click: unselectByClick,
-                }
+                },
+                height: 450
             },
             tooltip:{
                 crosshairs: true
@@ -44,20 +47,38 @@ function initPlot(){
             xAxis: {
                 title: {
                     enabled: true,
-                    text: 'Average Sentiment'
+                    text: 'Average Sentiment',
+                    style:{
+                        color: "#ffffff"
+                    }
                 },
                 startOnTick: false,
                 gridLineWidth: false,
                 showFirstLabel: true,
-                showLastLabel: true
+                showLastLabel: true,
+                lineColor: "#ffffff",
+                labels:{
+                    style:{
+                        color: "#ffffff"
+                    }
+                }
             },
             yAxis: {
                 title: {
-                    text: 'Average Rating'
+                    text: 'Average Rating',
+                    style:{
+                        color: "#ffffff"
+                    }
                 },
-                gridLineWidth: 0,
+                gridLineWidth: false,
                 showFirstLabel: false,
-                showLastLabel: false
+                showLastLabel: false,
+                lineColor: "#ffffff",
+                labels:{
+                    style:{
+                        color: "#ffffff"
+                    }
+                }
             },
             legend: {
                 enabled: false
@@ -97,7 +118,7 @@ function initPlot(){
                     tooltip: {
                         crosshairs: true,
                         headerFormat: '<b>{series.name}</b><br>',
-                        pointFormat: 'Title: {point.title} <br/> Sentiment Score: {point.sentimentValue} <br/> Rating: {point.rating}'
+                        pointFormat: 'Title: {point.title} <br/> Sentiment Score: {point.sentimentValue} <br/> Rating: {point.rating}<br/> Cost(USD): {point.price}'
                     },
                     jitter:{
                         x: 0.015,
@@ -112,7 +133,6 @@ function initPlot(){
                             select: function(e) {
 
                                 $("#displayText").html(e);
-                                console.log(e);
                                 var modal = document.getElementById("myModal");
                                 modal.style.display = "block";
                                 var modaljq = $('#myModal');
@@ -160,9 +180,9 @@ function initPlot(){
                                 });
 
 
-                                console.log(data);
+
                                 data = data.slice(0, 40);
-                                console.log(data);
+
                                 // Highcharts.chart('worcloud-container', {
                                 //     series: [{
                                 //         type: 'wordcloud',
@@ -216,6 +236,9 @@ function initPlot(){
                                         },
                                         name: 'Occurrences'
                                     }],
+                                    exporting: {
+                                        enabled: false
+                                    },
                                     chart:{
                                         events: {
                                             click: null,
@@ -224,7 +247,8 @@ function initPlot(){
                                     title: {
                                         text: 'Wordcloud of the product review',
                                         style :{
-                                            color:'#000000'
+                                            color:'#000000',
+                                            fontWeight: "bold"
                                         }
                                     }
                                 });
@@ -232,6 +256,9 @@ function initPlot(){
                         }
                     }
                 }
+            },
+            exporting: {
+                enabled: false
             },
             series: [{
                 data: processChartData(null),
@@ -250,7 +277,7 @@ function handleClick(){
 }
 
 function removeFilter(event){
-    //reset object to intial state 
+    //reset object to initial state
     filterObj = null;
     if(currentSelectedSentiment!=null){
     currentSelectedSentiment.style.background = "white";
@@ -260,12 +287,12 @@ function removeFilter(event){
     setTimeout(update, 1000, chart.update({
         series: [{
             data: chartData,
-            color: 'rgb(255, 26, 117,0.7)',
+            color: 'rgba(255,26,117,0.7)',
             name: 'Amazon Fashion'
         }]
     }));
-    //initialize flter obj to empty k-v pairs again
-    filterObj = {'sentiment':{},'rating':{}};
+    //initialize filter obj to empty k-v pairs again
+    filterObj = {'sentiment':{},'rating':{},'cost':{}};
 
 }
 
@@ -274,7 +301,11 @@ function handleFilter(event){
         var filterString = "";
         if(event.target == "ratingSlider"){
             filterString = "ratings " + event.data;
-        }else{
+        }
+        else if(event.target == "costSlider"){
+            filterString = "cost " + event.data;
+        }
+        else{
             if(event.target.getAttribute("class")!=null){
                 if(event.target.getAttribute("class").indexOf("btn") == -1){
                     if(event.target.getAttribute("class").indexOf("ratings") == 0){
@@ -324,6 +355,37 @@ function handleFilter(event){
             // sliderVal.innerHTML="Max Rating: "+event.target.value;
         }
 
+        else if(filterStringTokens[0] == 'cost'){
+            if(filterStringTokens[1] == "removeFilter"){
+                filterObj['cost']['data'] = [];
+                costSlider.setValue(maxCost)
+            }else{
+                filterObj['cost']['data'] = filterStringTokens[1];
+            }
+        }
+
+        else if(filterStringTokens[0] == "category") {
+
+            // Handle selected css for sentiment buttons
+            if (currentSelectedCategory != null) {
+                currentSelectedCategory.style.background = "white";
+            }
+            if (event.target.parentNode != document.getElementById("span12")) {
+                event.target.parentNode.style.background = "#c9e60e";
+                currentSelectedCategory = event.target.parentNode;
+            } else {
+                event.target.style.background = "#c9e60e";
+                currentSelectedCategory = event.target;
+            }
+
+
+            if (filterStringTokens[1] == "removeFilter") {
+                filterObj["category"]["data"] = [];
+            } else {
+                filterObj["category"]["data"] = filterStringTokens[1];
+
+            }
+        }
         chartData = processChartData(filterObj);
         setTimeout(update, 1000, chart.update({
             series: [{

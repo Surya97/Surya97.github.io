@@ -43,11 +43,11 @@
     <script src="initPlot.js"></script>
 </head>
 <body>
-    <header class="w3-container w3-center w3-padding-48 w3-white">
+    <header class="w3-container w3-center w3-padding-40 w3-white">
         <h1 class="w3-xxxlarge"><b>AMAZON FASHION REVIEWS</b></h1>
         <h6>Welcome to the Amazon fashion <span class="w3-tag">Sentiment based reviews</span></h6>
     </header>
-    <div class="main-div">
+    <div class="main-div" style="padding-bottom: 5%">
 
         <div class="container">
 
@@ -55,9 +55,6 @@
             </div>
             <div id="myModal" class="modal">
                 <div class="modal-content">
-
-
-
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-3">
@@ -116,6 +113,62 @@
                     <span>all</span>
                 </a>
             </div>
+            <div class="slidecontainer" id="costFilters" style="float:left;padding-left: 50px" >
+                <p style="color:white">Cost Based Filtering</p>
+                <input id="costSlider" data-slider-id='costSlider' type="text" data-slider-min="0" data-slider-max="0" data-slider-step="1" data-slider-value="0"/>
+                <a class="btn btn-default filterBtn" data-edit="cost removeFilter" style="margin-left:10px">
+                    <span>all</span>
+                </a>
+            </div>
+
+            <div class="categories" id="categoryFilters" style="float:left;padding-left: 20px">
+
+                <div id = "span12">
+                    <p style="color: white">Categories</p>
+
+                    <!--                    <select id="sizeby">-->
+                    <!--                        <option class="btn btn-default filterBtn" data-edit="category Clothing" selected>Clothing</option>-->
+                    <!--                        <option class="btn btn-default filterBtn" data-edit="category Accessories">Accessories</option>-->
+                    <!--                    </select>-->
+                    <a class="btn btn-default filterBtn" data-edit="category Clothing">
+                        <span>Clothing</span>
+                        <!--                        <i class="far fa-frown fa-2x"></i>-->
+                    </a>
+
+                    <a class="btn btn-default filterBtn" data-edit="category Accessories">
+                        <!--                        <i class="fa fa-meh-o fa-2x" aria-hidden="true"></i>-->
+                        <span>Accessories</span>
+                    </a>
+
+                    <a class="btn btn-default filterBtn" data-edit="category BabyProducts">
+                        <!--                        <i class="fa fa-meh-o fa-2x" aria-hidden="true"></i>-->
+                        <span>Baby Products</span>
+                    </a>
+
+                    <a class="btn btn-default filterBtn" data-edit="category BagsHousehold">
+                        <!--                        <i class="fa fa-meh-o fa-2x" aria-hidden="true"></i>-->
+                        <span>Bags & Household</span>
+                    </a>
+
+                    <a class="btn btn-default filterBtn" data-edit="category Jewelry">
+                        <!--                        <i class="fa fa-meh-o fa-2x" aria-hidden="true"></i>-->
+                        <span>Jewelry</span>
+                    </a>
+
+                    <a class="btn btn-default filterBtn" data-edit="category SportsShoes">
+                        <!--                        <i class="fa fa-meh-o fa-2x" aria-hidden="true"></i>-->
+                        <span>Sports & Shoes</span>
+                    </a>
+
+                    <a class="btn btn-default filterBtn" data-edit="category removeFilter">
+
+                        <span>all</span>
+                        <!--                        <i class="fa fa-meh-o fa-2x" aria-hidden="true"></i>-->
+                    </a>
+
+                </div>
+
+            </div>
         </div>
     </div>
     </div>
@@ -147,6 +200,10 @@
         tooltip: 'always',
         tooltip_position: 'bottom'
     });
+    var costSlider = new Slider("#costSlider", {
+        tooltip: 'always',
+        tooltip_position: 'bottom'
+    });
     // slider.addEventListener('change',(event)=>{
     //     handleFilter(event);
     // });
@@ -156,6 +213,10 @@
         ratingChangeEvent['data'] = value;
         handleFilter(ratingChangeEvent);
     });
+
+
+
+
 </script>
 
 </html>

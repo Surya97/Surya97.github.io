@@ -1,0 +1,6 @@
+There are basically two types of online shoppers:
+
+People who do their own research about products and buy stuff and People who have no idea about the specifications of the product and solely rely on ratings and reviews of other people of the product before they make a decision to buy it. 
+Our visualization aims to cater to the latter and works beacuse of the following reasons. 
+
+We have a selection of comprehensive categories of products which are more focused than what you would find online. We give you statistics extracted from people's reviews such as sentiment and ratings and consolidate it for all products on a visualization . Rather than you tediously reading reviews to get an idea, we do the heavy lifting for you.  We then let you filter the products by playing around with our simple filters while our visualization smoothly adapts. You can also interact with our visualization by direcly making mouse selections on it to zero in on a group of products you would want. You then simply click on the product to read more info such as how it looks and what were its individual statistics. From there you are shown the way to go buy it online.   
