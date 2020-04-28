@@ -38,8 +38,24 @@ function initPlot(){
                 },
                 height: 450
             },
-            tooltip:{
-                crosshairs: true
+            tooltip: {
+                useHTML:true,
+                formatter:function(){
+                    debugger;
+                    var tooltipStr = "<div class='customTooltip'>";
+                    tooltipStr += '<b> ' + this.series.name +'</b><br>';
+                    tooltipStr += 'Title: ' + this.point.title + '<br/> Sentiment Score: ' + this.point.sentimentValue +
+                        '<br/> Rating: ' + this.point.rating + '<br/> Cost(USD): ' + this.point.price;
+
+                    tooltipStr += '</div>';
+                    return tooltipStr;
+                },
+                crosshairs: true,
+                // headerFormat: '<b>{series.name}</b><br>',
+                // pointFormat: 'Title: {point.title} <br/> Sentiment Score: {point.sentimentValue} <br/> Rating: {point.rating}<br/> Cost(USD): {point.price}',
+                // style: {
+                //     textOverflow: 'ellipsis'
+                // }
             },
             title:{
                 text: null
@@ -49,7 +65,8 @@ function initPlot(){
                     enabled: true,
                     text: 'Average Sentiment',
                     style:{
-                        color: "#ffffff"
+                        color: "#ffffff",
+                        fontSize: '13px'
                     }
                 },
                 startOnTick: false,
@@ -59,7 +76,8 @@ function initPlot(){
                 lineColor: "#ffffff",
                 labels:{
                     style:{
-                        color: "#ffffff"
+                        color: "#ffffff",
+                        fontSize: '12px'
                     }
                 }
             },
@@ -67,7 +85,8 @@ function initPlot(){
                 title: {
                     text: 'Average Rating',
                     style:{
-                        color: "#ffffff"
+                        color: "#ffffff",
+                        fontSize: '13px'
                     }
                 },
                 gridLineWidth: false,
@@ -76,7 +95,8 @@ function initPlot(){
                 lineColor: "#ffffff",
                 labels:{
                     style:{
-                        color: "#ffffff"
+                        color: "#ffffff",
+                        fontSize: '12px'
                     }
                 }
             },
@@ -101,7 +121,7 @@ function initPlot(){
                                 lineColor: 'rgb(100,100,100)'
                             },
                             select:{
-                                fillColor: 'rgb(255, 26, 117,0.7)',
+                                fillColor: 'rgb(255,250,250,0.7)',
                                 lineWidth: 1,
                                 lineColor: '#ffffff',
                                 radius: 10
@@ -117,8 +137,6 @@ function initPlot(){
                     },
                     tooltip: {
                         crosshairs: true,
-                        headerFormat: '<b>{series.name}</b><br>',
-                        pointFormat: 'Title: {point.title} <br/> Sentiment Score: {point.sentimentValue} <br/> Rating: {point.rating}<br/> Cost(USD): {point.price}'
                     },
                     jitter:{
                         x: 0.015,
@@ -262,7 +280,7 @@ function initPlot(){
             },
             series: [{
                 data: processChartData(null),
-                color: 'rgb(255, 26, 117,0.7)',
+                color: 'rgb(255,250,250,0.7)',
                 name: 'Amazon Fashion'
             }]
         })
@@ -287,7 +305,7 @@ function removeFilter(event){
     setTimeout(update, 1000, chart.update({
         series: [{
             data: chartData,
-            color: 'rgba(255,26,117,0.7)',
+            color: 'rgb(255,250,250,0.7)',
             name: 'Amazon Fashion'
         }]
     }));
@@ -304,6 +322,9 @@ function handleFilter(event){
         }
         else if(event.target == "costSlider"){
             filterString = "cost " + event.data;
+        }
+        else if(event.target == "selectBox"){
+            filterString = "category " + event.data;
         }
         else{
             if(event.target.getAttribute("class")!=null){
@@ -367,17 +388,16 @@ function handleFilter(event){
         else if(filterStringTokens[0] == "category") {
 
             // Handle selected css for sentiment buttons
-            if (currentSelectedCategory != null) {
-                currentSelectedCategory.style.background = "white";
-            }
-            if (event.target.parentNode != document.getElementById("span12")) {
-                event.target.parentNode.style.background = "#c9e60e";
-                currentSelectedCategory = event.target.parentNode;
-            } else {
-                event.target.style.background = "#c9e60e";
-                currentSelectedCategory = event.target;
-            }
-
+            // if (currentSelectedCategory != null) {
+            //     currentSelectedCategory.style.background = "white";
+            // }
+            // if (event.target.parentNode != document.getElementById("span12")) {
+            //     event.target.parentNode.style.background = "#c9e60e";
+            //     currentSelectedCategory = event.target.parentNode;
+            // } else {
+            //     event.target.style.background = "#c9e60e";
+            //     currentSelectedCategory = event.target;
+            // }
 
             if (filterStringTokens[1] == "removeFilter") {
                 filterObj["category"]["data"] = [];
@@ -390,7 +410,7 @@ function handleFilter(event){
         setTimeout(update, 1000, chart.update({
             series: [{
                 data: chartData,
-                color: 'rgb(255, 26, 117,0.7)',
+                color: 'rgb(255,250,250,0.7)',
                 name: 'Amazon Fashion'
             }]
         }));

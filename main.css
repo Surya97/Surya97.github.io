@@ -76,6 +76,8 @@
 
 div#filtersMenu{
     padding: 2px;
+    margin-left: 30px;
+    padding-left: 130px;
     margin: 2px;
     display: inline-block
 }
@@ -87,8 +89,23 @@ div#ratingFilters{
     padding: 5px;
     margin: 5px;
 }
+div#costFilters{
+    padding: 5px;
+    margin: 5px;
+}
+div#categoryFilters{
+    padding: 5px;
+    margin: 5px;
+}
 .tooltip{
     z-index:0
+}
+
+.customTooltip{
+    width: 150px;
+    overflow:hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .btn:hover {
