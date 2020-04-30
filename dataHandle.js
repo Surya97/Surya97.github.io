@@ -36,8 +36,8 @@ function initData(){
            }
         });
         if(count > 0){
-            metadataElement['sentimentValue'] = average_sentiment_score/count;
-            metadataElement['rating'] = average_rating/count;
+            metadataElement['sentimentValue'] = parseFloat((average_sentiment_score/count).toPrecision(3));
+            metadataElement['rating'] = parseFloat((average_rating/count).toPrecision(3));
             if(metadataElement['sentimentValue'] < 3){
                 metadataElement['sentiment'] = 'Negative';
             }else if(metadataElement['sentimentValue'] > 3){
